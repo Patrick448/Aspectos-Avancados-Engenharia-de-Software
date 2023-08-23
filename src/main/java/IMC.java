@@ -19,8 +19,8 @@ public class IMC {
     }
 
     public void setAltura(float altura) {
-        if(altura==0.0){
-            throw new RuntimeException("Altura não pode ser zero");
+        if(altura<=0.0){
+            throw new IllegalArgumentException("Altura não pode ser menor ou igual a zero.");
         }
         this.altura = altura;
     }
@@ -31,7 +31,7 @@ public class IMC {
 
     public void setSexo(String sexo) {
         if(!sexo.equals("M") && !sexo.equals("F")){
-            throw new RuntimeException("Sexo inválido.");
+            throw new IllegalArgumentException("Sexo inválido.");
         }
         this.sexo = sexo;
     }
@@ -41,25 +41,25 @@ public class IMC {
         String resultado;
 
         if(sexo.equals("F")){
-            if(imc < 19.1){
+            if(imc < 19.1f){
                 resultado = "abaixo do peso";
-            }else if(imc < 25.8){
+            }else if(imc < 25.8f){
                 resultado = "no peso normal";
-            }else if(imc < 27.3){
+            }else if(imc < 27.3f){
                 resultado = "marginalmente acima do peso";
-            }else if(imc < 32.3){
+            }else if(imc < 32.3f){
                 resultado = "acima do peso ideal";
             }else{
                 resultado = "obeso";
             }
         }else{
-            if(imc < 20.7){
+            if(imc < 20.7f){
                 resultado = "abaixo do peso";
-            }else if(imc < 26.4){
+            }else if(imc < 26.4f){
                 resultado = "no peso normal";
-            }else if(imc < 27.8){
+            }else if(imc < 27.8f){
                 resultado = "marginalmente acima do peso";
-            }else if(imc < 31.1){
+            }else if(imc < 31.1f){
                 resultado = "acima do peso ideal";
             }else{
                 resultado =  "obeso";
