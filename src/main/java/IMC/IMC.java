@@ -1,3 +1,5 @@
+package IMC;
+
 public class IMC {
     private float peso;
     private float altura;
