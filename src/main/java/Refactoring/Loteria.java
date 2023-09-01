@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Loteria {
 
+    //todo: separar em classes diferentes
     private static final int FIRST_PRIZE_MATCH_NUMBER = 6;
     private static final int SECOND_PRIZE_MATCH_NUMBER = 5;
     private static final int THIRD_PRIZE_MATCH_NUMBER = 4;
@@ -80,7 +81,7 @@ public class Loteria {
         return prizeValue;
     }
 
-    public double makeBet(List<Integer> selectedNums, List<Integer> randomNums,  double prizeBaseValue) {
+    public double verifyLoteryResult(List<Integer> selectedNums, List<Integer> randomNums, double prizeBaseValue) {
         if(selectedNums == null || randomNums == null){
             throw new IllegalArgumentException("lista não pode ser nula");
         }

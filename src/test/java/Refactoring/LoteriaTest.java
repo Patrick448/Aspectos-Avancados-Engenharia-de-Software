@@ -19,8 +19,7 @@ class LoteriaTest {
 
     @Test
     public void deveRetornarExceçãoListaVerificada(){
-        List<Integer> list ;
-        list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         List<Integer> filteredList = loteria.verifySelectedNumbers(list);
         assertEquals(list, filteredList);
@@ -138,7 +137,7 @@ class LoteriaTest {
 
 
         try{
-            loteria.makeBet(null, sorteio, 100.0);
+            loteria.verifyLoteryResult(null, sorteio, 100.0);
             fail();
         }catch (IllegalArgumentException e){
             assertEquals("lista não pode ser nula", e.getMessage());
@@ -153,7 +152,7 @@ class LoteriaTest {
 
 
         try{
-            loteria.makeBet(aposta, null, 100.0);
+            loteria.verifyLoteryResult(aposta, null, 100.0);
             fail();
         }catch (IllegalArgumentException e){
             assertEquals("lista não pode ser nula", e.getMessage());
@@ -168,7 +167,7 @@ class LoteriaTest {
 
 
         try{
-            loteria.makeBet(aposta, sorteio, 100.0);
+            loteria.verifyLoteryResult(aposta, sorteio, 100.0);
             fail();
         }catch (IllegalArgumentException e){
             assertEquals("lista de números deve ter entre 6 e 15 elementos", e.getMessage());
@@ -184,7 +183,7 @@ class LoteriaTest {
 
 
         try{
-            loteria.makeBet(aposta, sorteio, 100.0);
+            loteria.verifyLoteryResult(aposta, sorteio, 100.0);
             fail();
         }catch (IllegalArgumentException e){
             assertEquals("lista de números deve ter entre 6 e 15 elementos", e.getMessage());
