@@ -11,97 +11,101 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoteriaTest {
 
     Loteria loteria;
+
     @BeforeEach
-    public void init(){
+    public void init() {
         loteria = new Loteria();
     }
 
 
     @Test
-    public void deveRetornarExceçãoListaVerificada(){
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+    public void deveRetornarListaVerificada() {
 
-        List<Integer> filteredList = loteria.verifySelectedNumbers(list);
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        Aposta aposta = new Aposta();
+
+        List<Integer> filteredList = aposta.verifySelectedNumbers(list);
         assertEquals(list, filteredList);
 
     }
 
     @Test
-    public void deveRetornarExceçãoListaNumerosRepetidos(){
-        List<Integer> list ;
+    public void deveRetornarExceçãoListaNumerosRepetidos() {
+        List<Integer> list;
         list = Arrays.asList(1, 2, 3, 4, 5, 1);
 
+
         try {
-            List<Integer> filteredList = loteria.verifySelectedNumbers(list);
+            Aposta aposta = new Aposta(list);
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("a lista não pode conter números repetidos", e.getMessage());
         }
     }
 
     @Test
-    public void deveRetornarExceçãoNumeroMenorQue1(){
-        List<Integer> list ;
+    public void deveRetornarExceçãoNumeroMenorQue1() {
+        List<Integer> list;
         list = Arrays.asList(0, 1, 2, 3, 4, 5);
 
         try {
-            List<Integer> filteredList = loteria.verifySelectedNumbers(list);
+            Aposta aposta = new Aposta(list);
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("a lista deve conter números entre 1 e 60", e.getMessage());
         }
     }
 
     @Test
-    public void deveRetornarExceçãoNumeroMaioQue60(){
-        List<Integer> list ;
+    public void deveRetornarExceçãoNumeroMaioQue60() {
+        List<Integer> list;
         list = Arrays.asList(0, 61, 2, 3, 4, 5);
 
         try {
-            List<Integer> filteredList = loteria.verifySelectedNumbers(list);
+            Aposta aposta = new Aposta(list);
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("a lista deve conter números entre 1 e 60", e.getMessage());
         }
     }
 
     @Test
     void deveRetornar0Acertos() {
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-        List<Integer> sorteio = Arrays.asList(13, 14, 15, 16, 17, 18);
+        Aposta aposta = new Aposta(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+        Sorteio sorteio = new Sorteio(Arrays.asList(13, 14, 15, 16, 17, 18));
 
         int acertos = loteria.countMatches(aposta, sorteio);
         assertEquals(0, acertos);
     }
 
     @Test
-    void deveRetornar6Acertos(){
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-        List<Integer> sorteio = Arrays.asList(1, 2, 3, 4, 5, 6);
+    void deveRetornar6Acertos() {
+        Aposta aposta = new Aposta(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+        Sorteio sorteio = new Sorteio(Arrays.asList(1, 2, 3, 4, 5, 6));
 
         int acertos = loteria.countMatches(aposta, sorteio);
         assertEquals(6, acertos);
     }
 
     @Test
-    void deveRetornarErroListaNulaCountMatches1() {
-        List<Integer> listB = Arrays.asList(13, 14, 15, 16, 17, 18);
+    void deveRetornarErroApostaNulaCountMatches1() {
+        Sorteio sorteio = new Sorteio();
         try {
-            loteria.countMatches(null, listB);
+            loteria.countMatches(null, sorteio);
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("lista não pode ser nula", e.getMessage());
+            assertEquals("Objetos passados como parâmetro não podem ser nulos", e.getMessage());
         }
     }
 
     @Test
     void deveRetornarErroListaNulaCountMatches2() {
-        List<Integer> listA = Arrays.asList(13, 14, 15, 16, 17, 18);
+        Aposta aposta = new Aposta();
         try {
-            loteria.countMatches(listA, null);
+            loteria.countMatches(aposta, null);
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("lista não pode ser nula", e.getMessage());
+            assertEquals("Objetos passados como parâmetro não podem ser nulos", e.getMessage());
         }
     }
 
@@ -132,44 +136,39 @@ class LoteriaTest {
     @Test
     void deveRetornarErroApostaNula() {
 
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-        List<Integer> sorteio = Arrays.asList(1, 2, 3, 4, 5, 6);
+        Sorteio sorteio = new Sorteio(Arrays.asList(1, 2, 3, 4, 5, 6));
 
 
-        try{
+        try {
             loteria.verifyLoteryResult(null, sorteio, 100.0);
             fail();
-        }catch (IllegalArgumentException e){
-            assertEquals("lista não pode ser nula", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            assertEquals("Objetos passados como parâmetro não podem ser nulos", e.getMessage());
         }
     }
 
     @Test
     void deveRetornarErroSorteioNulo() {
 
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-        List<Integer> sorteio = Arrays.asList(1, 2, 3, 4, 5, 6);
+        Aposta aposta = new Aposta(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
 
 
-        try{
+        try {
             loteria.verifyLoteryResult(aposta, null, 100.0);
             fail();
-        }catch (IllegalArgumentException e){
-            assertEquals("lista não pode ser nula", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            assertEquals("Objetos passados como parâmetro não podem ser nulos", e.getMessage());
         }
     }
 
     @Test
     void deveRetornarErroApostaPequena() {
 
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5);
-        List<Integer> sorteio = Arrays.asList(1, 2, 3, 4, 5, 6);
 
-
-        try{
-            loteria.verifyLoteryResult(aposta, sorteio, 100.0);
+        try {
+            Aposta aposta = new Aposta(Arrays.asList(1, 2, 3, 4, 5));
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("lista de números deve ter entre 6 e 15 elementos", e.getMessage());
         }
     }
@@ -178,14 +177,10 @@ class LoteriaTest {
     @Test
     void deveRetornarErroApostaGrande() {
 
-        List<Integer> aposta = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,16);
-        List<Integer> sorteio = Arrays.asList(1, 2, 3, 4, 5, 6);
-
-
-        try{
-            loteria.verifyLoteryResult(aposta, sorteio, 100.0);
+        try {
+            Aposta aposta = new Aposta(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("lista de números deve ter entre 6 e 15 elementos", e.getMessage());
         }
     }
