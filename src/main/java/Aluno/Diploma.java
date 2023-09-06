@@ -14,4 +14,6 @@ public class Diploma {
     public void setData(String data) {
         this.data = data;
     }
+
+    //
 }
